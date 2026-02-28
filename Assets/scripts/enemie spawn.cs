@@ -5,8 +5,8 @@ public class enemiespawn : MonoBehaviour
 {
     private BoxCollider2D _boxCollider;
     public GameObject[] enemiesPrefab;
-    //public Transform spawnPosition; 
-    //public Transform spawnPosition2;
+    public Transform spawnPosition; 
+    public Transform spawnPosition2;
     public Transform[] spawnPoints; 
     public int enemiesToSpawn = 5; 
 

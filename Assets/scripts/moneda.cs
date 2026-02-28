@@ -15,11 +15,12 @@ public class moneda : MonoBehaviour
 
         monedaAnimator = GetComponent<Animator>();
 
-        //gamemanager = GameObject.Find("game manager").GetComponent<gamemanager>();
-
         rigidbodyMoneda = GetComponent<Rigidbody2D>();
 
-        _audioSourceMoneda = GetComponent<AudioSource>();
+        _audioSourceMoneda = GetComponent<AudioSource>(); 
+    
+        gamemanager = GameObject.Find("game manager").GetComponent<game manager>();
+
 
     } 
 
@@ -31,7 +32,8 @@ public class moneda : MonoBehaviour
         {
           //  _spriterender.enabled = false; 
           //  _gamemanager.Coins(); 
-            _audioSourceMoneda.PlayOneShot(monedaSonido); 
+            _audioSourceMoneda.PlayOneShot(monedaSonido);  
+            _gamemanager-CoinCounter();
             Destroy(gameObject, 0.5f);
         } 
 

@@ -4,26 +4,37 @@ using UnityEngine.UI;
 
 public class goomba : MonoBehaviour
 {
+    //animacion para el goomba 
+    public Animator goombaAnimator; 
+
+    //direccion y velocidad 
+    public float movementSpeed = 5;
+    public int direction = 1;
+
+    //muerte goomba 
     private Rigidbody2D _rigidBody2D;
     private AudioSource _audioSource;
     private BoxCollider2D _boxCollider;
     private gamemanager _gameManager;
-
-    public AudioClip deathSFX;
-
-    public float movementSpeed = 4;
-    public int direction = 1;
-    private int _goombaHealth = 3;
+    public int _goombaHealth = 3;
     private Slider _healthSlider;
 
-    void Awake()
-    {
+    public AudioClip deathSFX;
+    private playercontroler _playerScript;
+
+  //  public float movementSpeed = 4;
+  //  public int direction = 1;
+
+    void Awake() 
+    { 
+        goombaAnimator = GetComponent<Animator>();
+
         _rigidBody2D = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _gameManager = GameObject.Find("game manager").GetComponent<gamemanager>();
         _healthSlider = GetComponentInChildren<Slider>();
-        // _playerScript = GameObject.Find("Mario_0").GetComponent<PlayerControler>();
+        _playerScript = GameObject.Find("Mario_0").GetComponent<playercontroler>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,8 +46,19 @@ public class goomba : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    } 
+        if(direction > 0)
+        {
+            goombaAnimator.SetBool("Walk", true);
+        }
+        else if(direction > 0)
+        {
+            goombaAnimator.SetBool("Walk", false);
+        }
+        else
+        {
+            goombaAnimator.SetBool("Walk", false);
+        }   
+    }
 
     void FixedUptade()
     {
@@ -54,7 +76,8 @@ public class goomba : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(collision.gameObject);
+            StartCoroutine(_playerScript.MarioDeath());
+           // Destroy(collision.gameObject);
         }
     }
 
@@ -72,10 +95,13 @@ public class goomba : MonoBehaviour
     public void GoombaDeath()
     {
 
-        _gameManager.Addkill();
+        _gameManager.Addkill(); 
+        goombaAnimator.SetBool("Goomba death", true);
+
         _audioSource.PlayOneShot(deathSFX);
         movementSpeed = 0;
         _boxCollider.enabled = false;
+       
         Destroy(gameObject,1);
     }
 }    

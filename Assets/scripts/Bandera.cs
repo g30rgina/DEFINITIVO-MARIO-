@@ -19,7 +19,7 @@ public class Bandera : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             _boxCollider.enabled = false;
-            StartCoroutine(_gameManager.win());
+            StartCoroutine(_gameManager.Win());
         }
         
 
